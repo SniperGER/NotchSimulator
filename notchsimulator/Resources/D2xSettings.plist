@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Enabling X Mode will simulate the whole iPhone X experience in a battery efficient way, compared to LittleX. Please disable any tweak like LittleX before enabling X Mode.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>d2xEnabled</string>
+			<key>label</key>
+			<string>Enabled</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>d2xDock</string>
+			<key>label</key>
+			<string>Dock</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>d2xStatusBar</string>
+			<key>label</key>
+			<string>Status Bar</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>d2xHomeGrabber</string>
+			<key>label</key>
+			<string>Home Grabber</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>d2xKeyboard</string>
+			<key>label</key>
+			<string>Extended Keyboard</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>d2xReduceIconRows</string>
+			<key>label</key>
+			<string>Reduce Icon Rows</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>d2xSwitcherStyle</string>
+			<key>label</key>
+			<string>Switcher Style</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>validValues</key>
+			<array>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Hold</string>
+				<string>Swipe</string>
+			</array>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>X Mode</string>
+</dict>
+</plist>

@@ -1,0 +1,10 @@
+Package: ml.festival.notchsimulator
+Name: Notch'd
+Depiction: https://repo.festival.ml/depiction/ml.festival.notchsimulator
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: Simulate that iPhone X notch!
+Maintainer: Sniper_GER <sniperger@festival.ml>
+Author: Sniper_GER <sniperger@festival.ml>
+Section: Tweaks
