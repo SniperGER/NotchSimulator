@@ -998,7 +998,7 @@ static void bundleIdentifierBecameHidden(NSString *bundleIdentifier) {
 		
 			if ([identifier isEqualToString:@"com.apple.springboard"]) {
 				%init(SpringBoard);
-			} else if (identifier && enabledInApp) {
+			} else if (identifier && enabledInApp && ![identifier isEqualToString:@"com.apple.MediaPlayer.RemotePlayerService"]) {
 				if ([disabledBoundsIdentifiers containsObject:identifier]) {
 					%init(ExtraHooks);
 				} else {

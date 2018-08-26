@@ -8,3 +8,5 @@ Description: Simulate that iPhone X notch!
 Maintainer: Sniper_GER <sniperger@festival.ml>
 Author: Sniper_GER <sniperger@festival.ml>
 Section: Tweaks
+compatible_min::11.0
+compatible_max::11.3.1

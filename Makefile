@@ -1,7 +1,7 @@
 export THEOS_DEVICE_IP=192.168.178.38
 export SDKROOT=iphoneos
 export SYSROOT=$(THEOS)/sdks/iPhoneOS11.2.sdk
-export PACKAGE_VERSION=0.3-1
+export PACKAGE_VERSION=0.3-2
 
 export ARCHS = arm64
 
