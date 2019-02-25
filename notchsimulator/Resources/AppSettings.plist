@@ -7,8 +7,24 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>enabled</string>
 			<key>label</key>
-			<string>Notch&apos;d</string>
+			<string>ENABLED</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>NOTCH_SIMULATOR_TITLE</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -20,7 +36,7 @@
 			<key>key</key>
 			<string>showNotch</string>
 			<key>label</key>
-			<string>Notch</string>
+			<string>NOTCH_SIMULATOR_NOTCH</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -32,13 +48,13 @@
 			<key>key</key>
 			<string>showRoundedCorners</string>
 			<key>label</key>
-			<string>Rounded Corners</string>
+			<string>NOTCH_SIMULATOR_ROUNDED_CORNERS</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>X Mode</string>
+			<string>D2X_TITLE</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -50,46 +66,10 @@
 			<key>key</key>
 			<string>d2xEnabled</string>
 			<key>label</key>
-			<string>Enabled</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>ml.festival.notchsimulator</string>
-			<key>key</key>
-			<string>d2xStatusBar</string>
-			<key>label</key>
-			<string>Status Bar</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>ml.festival.notchsimulator</string>
-			<key>key</key>
-			<string>d2xHomeGrabber</string>
-			<key>label</key>
-			<string>Home Grabber</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>ml.festival.notchsimulator</string>
-			<key>key</key>
-			<string>d2xKeyboard</string>
-			<key>label</key>
-			<string>Extended Keyboard</string>
+			<string>D2X_ENABLED</string>
 		</dict>
 	</array>
 	<key>title</key>
-	<string>Application Settings</string>
+	<string>APP_SETTINGS</string>
 </dict>
 </plist>

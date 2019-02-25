@@ -21,6 +21,8 @@ extern "C" {
 		_specifiers = specifiers;
 	}
 	
+	prefBundle = [NSBundle bundleWithPath:@"/Library/PreferenceBundles/notchsimulator.bundle"];
+	
 	return _specifiers;
 }
 
@@ -39,7 +41,7 @@ extern "C" {
 	OrderedDictionary* orderedApps = (OrderedDictionary*)[apps copy];
 	orderedApps = [self sortedDictionary:orderedApps];
 	
-	PSSpecifier* groupSpecifier = [PSSpecifier groupSpecifierWithName:@"Applications:"];
+	PSSpecifier* groupSpecifier = [PSSpecifier groupSpecifierWithName:[prefBundle localizedStringForKey:@"APP_SETTINGS" value:@"" table:@"Root"]];
 	[specifiers addObject:groupSpecifier];
 	
 	for (NSString* bundleIdentifier in orderedApps.allKeys) {
@@ -85,11 +87,13 @@ extern "C" {
 }
 
 - (void)respring {
-	UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"Restart SpringBoard" message:@"Restarting SpringBoard will apply all changed settings." preferredStyle:UIAlertControllerStyleActionSheet];
+	UIAlertController* alertController = [UIAlertController alertControllerWithTitle:[prefBundle localizedStringForKey:@"RESTART_SPRINGBOARD_TITLE" value:@"" table:@"Root"]
+																			 message:[prefBundle localizedStringForKey:@"RESTART_SPRINGBOARD_MESSAGE" value:@"" table:@"Root"]
+																	  preferredStyle:UIAlertControllerStyleActionSheet];
 	
-	UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+	UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:[prefBundle localizedStringForKey:@"RESTART_SPRINGBOARD_CANCEL" value:@"" table:@"Root"]
 														   style:UIAlertActionStyleCancel handler:nil];
-	UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Restart SpringBoard"
+	UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:[prefBundle localizedStringForKey:@"RESTART_SPRINGBOARD_CONFIRM" value:@"" table:@"Root"]
 															style:UIAlertActionStyleDestructive
 														  handler:^(UIAlertAction* action) {
 															  pid_t pid;

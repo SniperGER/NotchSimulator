@@ -8,7 +8,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Enabling X Mode will simulate the whole iPhone X experience in a battery efficient way, compared to LittleX. Please disable any tweak like LittleX before enabling X Mode.</string>
+			<string>D2X_ENABLED_FOOTER</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -20,7 +20,7 @@
 			<key>key</key>
 			<string>d2xEnabled</string>
 			<key>label</key>
-			<string>Enabled</string>
+			<string>D2X_ENABLED</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -36,43 +36,7 @@
 			<key>key</key>
 			<string>d2xDock</string>
 			<key>label</key>
-			<string>Dock</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>ml.festival.notchsimulator</string>
-			<key>key</key>
-			<string>d2xStatusBar</string>
-			<key>label</key>
-			<string>Status Bar</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>ml.festival.notchsimulator</string>
-			<key>key</key>
-			<string>d2xHomeGrabber</string>
-			<key>label</key>
-			<string>Home Grabber</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>ml.festival.notchsimulator</string>
-			<key>key</key>
-			<string>d2xKeyboard</string>
-			<key>label</key>
-			<string>Extended Keyboard</string>
+			<string>D2X_DOCK</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -84,7 +48,7 @@
 			<key>key</key>
 			<string>d2xReduceIconRows</string>
 			<key>label</key>
-			<string>Reduce Icon Rows</string>
+			<string>D2X_REDUCE_ICON_ROWS</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -96,7 +60,7 @@
 			<key>key</key>
 			<string>d2xSwitcherStyle</string>
 			<key>label</key>
-			<string>Switcher Style</string>
+			<string>D2X_SWITCHER_STYLE</string>
 			<key>detail</key>
 			<string>PSListItemsController</string>
 			<key>validValues</key>
@@ -106,12 +70,24 @@
 			</array>
 			<key>validTitles</key>
 			<array>
-				<string>Hold</string>
-				<string>Swipe</string>
+				<string>D2X_SWITCHER_STYLE_HOLD</string>
+				<string>D2X_SWITCHER_STYLE_SWIPE</string>
 			</array>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>d2xDisableHomeRotation</string>
+			<key>label</key>
+			<string>D2X_DISABLE_HOME_ROTATION</string>
 		</dict>
 	</array>
 	<key>title</key>
-	<string>X Mode</string>
+	<string>D2X_TITLE</string>
 </dict>
 </plist>

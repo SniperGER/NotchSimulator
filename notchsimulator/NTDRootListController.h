@@ -1,5 +1,7 @@
 #import <Preferences/PSListController.h>
 
-@interface NTDRootListController : PSListController
+@interface NTDRootListController : PSListController {
+	NSBundle* prefBundle;
+}
 
 @end

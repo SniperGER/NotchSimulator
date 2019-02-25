@@ -1,0 +1,27 @@
+/*
+  LatchSettings.strings
+  NotchSimulator
+ 
+  Created by Janik Schmidt on 10.09.18.
+ 
+*/
+
+{
+	"GENERAL" = "General";
+	"GENERAL_ENABLED" = "Enabled";
+	
+	"ELEMENTS" = "Elements";
+	"ELEMENTS_NOTCH" = "Notch";
+	"ELEMENTS_ROUNDED_CORNERS" = "Rounded Corners";
+	"ELEMENTS_HIDE_IN_SCREENSHOTS" = "Hide in Screenshots";
+	
+	"SECTION_FACE_ID" = "Face ID Latch";
+	"SECTION_X_MODE" = "X Mode (Beta)";
+	
+	"RESTART_SPRINGBOARD_TITLE" = "Restart SpringBoard";
+	"RESTART_SPRINGBOARD_MESSAGE" = "Restarting SpringBoard will apply all changed settings.";
+	"RESTART_SPRINGBOARD_CONFIRM" = "Restart SpringBoard";
+	"RESTART_SPRINGBOARD_CANCEL" = "Cancel";
+	
+	"APP_SETTINGS" = "App Settings";
+}

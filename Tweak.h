@@ -1,25 +1,95 @@
-#import "D22APWindow.h"
+//
+//  Tweak.h
+//  Notch'd
+//
+//  Created by Janik Schmidt on 03.01.19.
+//
+
+#include "substrate.h"
+#import "NotchWindow.h"
+
 #define DPKG_PATH "/var/lib/dpkg/info/ml.festival.notchsimulator.list"
 
+
+/**
+ * Headers
+ */
+@interface SpringBoard : UIApplication
+@property (nonatomic, strong) NotchWindow* notchWindow;
+@end
+
+@interface CAMViewfinderView : UIView
+- (UIView*)bottomBar;
+- (UIView*)topBar;
+@end
+
+@interface SBDashBoardProudLockViewController : UIViewController {
+    BOOL _desiredIconState;
+    BOOL _iconVisible;
+}
+
+- (void)_setIconVisible:(BOOL)arg1 animated:(BOOL)arg2;
+- (void)_setIconState:(long long)arg1 animated:(BOOL)arg2;
+- (void)setPresenter:(id)arg1;
+@end
+
+@interface SBUIProudLockIconView : UIView
+@end
+
+@interface SBDashBoardView : UIView
+@end
+
+@interface SBDashBoardPasscodeViewController : UIViewController
+- (void)setShowProudLock:(BOOL)arg1;
+- (BOOL)useBiometricPresentation;
+@end
+
+@interface SBDashBoardPasscodeView : UIView
+- (void)resetForFailedMesaAttemptWithStatusText:(id)arg1 andSubtitle:(id)arg2;
+@end
+
+@interface SBLockScreenManager
++ (instancetype)sharedInstance;
+- (BOOL)isLockScreenActive;
+@end
+
+@interface SBUIPasscodeLockViewSimpleFixedDigitKeypad : UIView
+- (BOOL)isBiometricAuthenticationAllowed;
+-(void)_updateBiometricGlyphForBioEvent:(unsigned long long)arg1 animated:(BOOL)arg2 completion:(id)arg3 ;
+-(void)_updateProudLockForBioEvent:(unsigned long long)arg1 animated:(BOOL)arg2 completion:(id)arg3 ;
+@end
+
+@interface WGWidgetGroupViewController : UIViewController
+@end
+
+@interface NCNotificationListCollectionView : UIScrollView
+//- (UIEdgeInsets)adjustedContentInset;
+@end
+
+
+
+/**
+ * Instances
+ */
 static NSDictionary* notchPreferences;
-static D22APWindow* notchWindow;
-static BOOL showNotch = YES;
-static BOOL showRoundedCorners = YES;
-static BOOL hideVisualsInScreenshots = YES;
+static NotchWindow* notchWindow;
+static SBDashBoardProudLockViewController* proudLockViewController;
+static SBUIProudLockIconView* proudLockIconView;
 
-@interface SpringBoard : NSObject
-@property (nonatomic, retain) D22APWindow* notchWindow;
-@end
 
-@interface FBProcess : NSObject
-@property (nonatomic,copy,readonly) NSString * bundleIdentifier;
-@end
 
-@interface FBScene : NSObject
-@property (nonatomic,retain,readonly) FBProcess * clientProcess;
-@end
+/**
+ * Preferences
+ */
+static BOOL enabled = YES;
+static BOOL notchVisible = YES;
+static BOOL roundedCornersVisible = YES;
+static BOOL hideInScreenshots = YES;
 
-@interface SBApplicationController : NSObject
-+ (id)sharedInstance;
-- (id)applicationWithBundleIdentifier:(NSString *)arg1;
-@end
+static BOOL latchEnabled = YES;
+
+static BOOL d2xEnabled = YES;
+static BOOL modernDock = YES;
+static BOOL reduceIconRows = NO;
+static NSInteger switcherKillStyle = 1;
+static BOOL disableHomeScreenRotation = YES;

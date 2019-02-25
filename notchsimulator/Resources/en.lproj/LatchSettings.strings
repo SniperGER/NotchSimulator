@@ -1,0 +1,13 @@
+/* 
+  LatchSettings.strings
+  NotchSimulator
+
+  Created by Janik Schmidt on 10.09.18.
+  
+*/
+
+{
+	"LATCH_TITLE" = "Face ID Latch";
+	"LATCH_ENABLED" = "Enabled";
+	"LATCH_ENABLED_FOOTER" = "This will add the Face ID latch as seen on iPhone X to your lock screen.";
+}

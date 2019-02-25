@@ -1,6 +1,7 @@
 SHARED_CFLAGS = -fobjc-arc
 CFLAGS = -fobjc-arc
 ADDITIONAL_OBJCFLAGS = -fobjc-arc
+ARCHS = arm64
 
 include $(THEOS)/makefiles/common.mk
 

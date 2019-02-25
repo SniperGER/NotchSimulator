@@ -1,6 +1,6 @@
 Package: ml.festival.notchsimulator
 Name: Notch'd
-Depiction: https://repo.festival.ml/depiction/ml.festival.notchsimulator
+Depiction: https://repo.festival.ml/#/package/ml.festival.notchsimulator
 Depends: mobilesubstrate
 Version: 0.0.1
 Architecture: iphoneos-arm

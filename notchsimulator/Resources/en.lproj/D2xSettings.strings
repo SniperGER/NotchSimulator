@@ -1,0 +1,20 @@
+/* 
+  D2xSettings.strings
+  NotchSimulator
+
+  Created by Janik Schmidt on 10.09.18.
+  
+*/
+
+{
+	"D2X_TITLE" = "X Mode";
+	"D2X_ENABLED" = "Enabled";
+	"D2X_ENABLED_FOOTER" = "Enabling X Mode will simulate the whole iPhone X experience in a battery efficient way (compared to LittleX). Please disable any tweak like LittleX before enabling X Mode.";
+	
+	"D2X_DOCK" = "Dock";
+	"D2X_REDUCE_ICON_ROWS" = "Reduce Icon Rows";
+	"D2X_SWITCHER_STYLE" = "Switcher Style";
+	"D2X_SWITCHER_STYLE_HOLD" = "Hold";
+	"D2X_SWITCHER_STYLE_SWIPER" = "Swipe";
+	"D2X_DISABLE_HOME_ROTATION" = "Disable Home Screen Rotation";
+}

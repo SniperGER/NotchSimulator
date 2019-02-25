@@ -1,6 +1,13 @@
-#import "D22APWindow.h"
+//
+//  NotchWindow.m
+//  NotchSimulator
+//
+//  Created by Janik Schmidt on 07.09.18.
+//
 
-@implementation D22APWindow
+#import "NotchWindow.h"
+
+@implementation NotchWindow
 
 - (id)initWithFrame:(CGRect)frame {
 	if (self = [super initWithFrame:frame]) {
@@ -75,13 +82,6 @@
 		
 		[roundedCorners setHidden:!roundedCornersVisible];
 	}
-}
-
-- (void)setHidden:(BOOL)hidden {
-	[super setHidden:hidden];
-	
-	[notch setHidden:!notchIsVisible];
-	[roundedCorners setHidden:!roundedCornersAreVisible];
 }
 
 - (BOOL)_ignoresHitTest {

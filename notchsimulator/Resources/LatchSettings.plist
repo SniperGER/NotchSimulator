@@ -8,7 +8,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>This will add the Face ID latch as seen on iPhone X to your lock screen. This is still considered beta and might cause layout issues.</string>
+			<string>LATCH_ENABLED_FOOTER</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -20,28 +20,10 @@
 			<key>key</key>
 			<string>latchEnabled</string>
 			<key>label</key>
-			<string>Enabled</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSEditTextCell</string>
-			<key>default</key>
-			<integer>0</integer>
-			<key>defaults</key>
-			<string>ml.festival.notchsimulator</string>
-			<key>key</key>
-			<string>latchOffsetY</string>
-			<key>label</key>
-			<string>Offset</string>
-			<key>isNumeric</key>
-			<false/>
+			<string>LATCH_ENABLED</string>
 		</dict>
 	</array>
 	<key>title</key>
-	<string>Face ID Latch</string>
+	<string>LATCH_TITLE</string>
 </dict>
 </plist>
