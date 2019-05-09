@@ -390,7 +390,7 @@ static CFPropertyListRef (*orig_MGCopyAnswer_internal)(CFStringRef prop, uint32_
 CFPropertyListRef new_MGCopyAnswer_internal(CFStringRef key, uint32_t* outTypeCode) {
     CFPropertyListRef r = orig_MGCopyAnswer_internal(key, outTypeCode);
     #define k(string) CFEqual(key, CFSTR(string))
-    
+     NSString* bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     if (k("oPeik/9e8lQWMszEjbPzng") || k("ArtworkTraits")) {
         CFMutableDictionaryRef copy = CFDictionaryCreateMutableCopy(NULL, 0, (CFDictionaryRef)r);
         CFRelease(r);
@@ -402,7 +402,7 @@ CFPropertyListRef new_MGCopyAnswer_internal(CFStringRef key, uint32_t* outTypeCo
         CFDictionarySetValue(copy, CFSTR("ArtworkDeviceSubType"), num);
 
         return copy;
-    } else if (k("8olRm6C1xqr7AJGpLRnpSw") || k("PearlIDCapability")) {
+    } else if ((k("8olRm6C1xqr7AJGpLRnpSw") || k("PearlIDCapability")) && [bundleIdentifier isEqualToString:@"com.apple.springboard"]) {
         return (__bridge CFPropertyListRef)@YES;
     } else if (k("y5dppxx/LzxoNuW+iIKR3g") || k("DeviceCornerRadius")) {
         return (__bridge CFPropertyListRef)@39;
