@@ -87,9 +87,10 @@ extern "C" {
 }
 
 - (void)respring {
+	BOOL isIpad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
 	UIAlertController* alertController = [UIAlertController alertControllerWithTitle:[prefBundle localizedStringForKey:@"RESTART_SPRINGBOARD_TITLE" value:@"" table:@"Root"]
 																			 message:[prefBundle localizedStringForKey:@"RESTART_SPRINGBOARD_MESSAGE" value:@"" table:@"Root"]
-																	  preferredStyle:UIAlertControllerStyleActionSheet];
+																	  preferredStyle:isIpad ? UIAlertControllerStyleAlert : UIAlertControllerStyleActionSheet];
 	
 	UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:[prefBundle localizedStringForKey:@"RESTART_SPRINGBOARD_CANCEL" value:@"" table:@"Root"]
 														   style:UIAlertActionStyleCancel handler:nil];

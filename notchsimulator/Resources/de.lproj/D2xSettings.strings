@@ -7,14 +7,13 @@
 */
 
 {
-	"D2X_TITLE" = "X Mode";
+	"D2X_TITLE" = "X🅂 Mode";
 	"D2X_ENABLED" = "Aktiviert";
-	"D2X_ENABLED_FOOTER" = "Der X Mode simuliert die iPhone X-Erfahrung auf eine stromsparende Weise (verglichen mit LittleX). Bitte deaktiviere alle LittleX-ähnlichen Tweaks, bevor du den X Mode sktivierst.";
+	"D2X_ENABLED_FOOTER" = "Der X🅂 Mode simuliert die iPhone X🅂-Erfahrung auf eine stromsparende Weise (verglichen mit LittleX). Bitte deaktiviere alle LittleX-ähnlichen Tweaks, bevor du den X🅂 Mode sktivierst.";
 	
 	"D2X_DOCK" = "Dock";
 	"D2X_REDUCE_ICON_ROWS" = "Icon-Reihen reduzieren";
 	"D2X_SWITCHER_STYLE" = "Multitasking-Stil";
-	"D2X_SWITCHER_STYLE_HOLD" = "Halten";
-	"D2X_SWITCHER_STYLE_SWIPE" = "Wischen";
 	"D2X_DISABLE_HOME_ROTATION" = "Homescreen-Rotation verhindern";
+	"D2X_IPAD_DESCRIPTION" = "Diese Einstellungen haben keinerlei Effekt auf iPad.";
 }

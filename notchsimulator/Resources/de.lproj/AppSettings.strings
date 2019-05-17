@@ -8,12 +8,13 @@
 
 {
 	"APP_SETTINGS" = "App-Einstellungen";
-	"ENABLED" = "Aktiviert";
+	"GENERAL_TITLE" = "Allgemein";
+	"GENERAL_ENABLED" = "Aktiviert";
 	
 	"NOTCH_SIMULATOR_TITLE" = "Notch'd";
 	"NOTCH_SIMULATOR_NOTCH" = "Notch";
 	"NOTCH_SIMULATOR_ROUNDED_CORNERS" = "Abgerundete Ecken";
 	
-	"D2X_TITLE" = "X Mode";
+	"D2X_TITLE" = "X🅂 Mode";
 	"D2X_ENABLED" = "Aktiviert";
 }

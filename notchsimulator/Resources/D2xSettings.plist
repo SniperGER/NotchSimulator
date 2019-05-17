@@ -25,6 +25,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>D2X_IPAD_DESCRIPTION</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -49,30 +51,6 @@
 			<string>d2xReduceIconRows</string>
 			<key>label</key>
 			<string>D2X_REDUCE_ICON_ROWS</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSLinkListCell</string>
-			<key>default</key>
-			<integer>1</integer>
-			<key>defaults</key>
-			<string>ml.festival.notchsimulator</string>
-			<key>key</key>
-			<string>d2xSwitcherStyle</string>
-			<key>label</key>
-			<string>D2X_SWITCHER_STYLE</string>
-			<key>detail</key>
-			<string>PSListItemsController</string>
-			<key>validValues</key>
-			<array>
-				<integer>1</integer>
-				<integer>2</integer>
-			</array>
-			<key>validTitles</key>
-			<array>
-				<string>D2X_SWITCHER_STYLE_HOLD</string>
-				<string>D2X_SWITCHER_STYLE_SWIPE</string>
-			</array>
 		</dict>
 		<dict>
 			<key>cell</key>

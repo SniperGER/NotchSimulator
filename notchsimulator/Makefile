@@ -6,7 +6,7 @@ ARCHS = arm64
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = notchsimulator
-notchsimulator_FILES = NTDRootListController.m NTDAppSettingsController.m NTDD2xSettings.m NTDLatchSettings.m OrderedDictionary.m
+notchsimulator_FILES = NTDRootListController.m NTDAppSettingsController.m NTDD2xSettings.m  OrderedDictionary.m
 notchsimulator_INSTALL_PATH = /Library/PreferenceBundles
 notchsimulator_FRAMEWORKS = UIKit
 notchsimulator_PRIVATE_FRAMEWORKS = Preferences SpringBoardServices

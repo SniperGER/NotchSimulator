@@ -66,6 +66,13 @@
 //- (UIEdgeInsets)adjustedContentInset;
 @end
 
+@interface SBDashBoardQuickActionsView : UIView
+@end
+
+@interface UIView (SBRemoveAllSubviews)
+- (void)sb_removeAllSubviews;
+@end
+
 
 
 /**
@@ -75,6 +82,9 @@ static NSDictionary* notchPreferences;
 static NotchWindow* notchWindow;
 static SBDashBoardProudLockViewController* proudLockViewController;
 static SBUIProudLockIconView* proudLockIconView;
+
+static BOOL isIpad = NO;
+static BOOL isPeace = NO;
 
 
 

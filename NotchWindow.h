@@ -15,10 +15,13 @@
 @interface NotchWindow : UIWindow {
 	BOOL notchIsVisible;
 	BOOL roundedCornersAreVisible;
+	BOOL notchDetailIsVisible;
 	UIView* notch;
 	UIView* roundedCorners;
+	UIImageView* notchDetail;
 }
 
 - (void)setNotchVisible:(BOOL)notchVisible roundedCornersVisible:(BOOL)roundedCornersVisible;
+- (void)setNotchDetailVisible:(BOOL)notchDetailVisible;
 
 @end

@@ -16,46 +16,42 @@
  */
 - (void)applicationDidFinishLaunching:(id)arg1 {
     %orig;
-    
-    self.notchWindow = [[NotchWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+	
+	CGRect notchFrame = UIScreen.mainScreen.bounds;
+	if (isIpad) {
+		if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
+			notchFrame = CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.height, UIScreen.mainScreen.bounds.size.width);
+		} else {
+			notchFrame = CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, UIScreen.mainScreen.bounds.size.height);
+		}
+
+	}
+	
+    self.notchWindow = [[NotchWindow alloc] initWithFrame:notchFrame];
     notchWindow = self.notchWindow;
     
     [self.notchWindow setNotchVisible:notchVisible roundedCornersVisible:roundedCornersVisible];
     [self.notchWindow makeKeyAndVisible];
 }
+
+- (void)takeScreenshotAndEdit:(BOOL)arg1 {
+	if (hideInScreenshots) {
+		[self.notchWindow setHidden:YES];
+		
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+			%orig;
+		});
+	} else {
+		%orig;
+	}
+}
+
+- (void)screenCapturer:(id)arg1 didCaptureScreenshotsOfScreens:(id)arg2 {
+	%orig;
+	
+	[self.notchWindow setHidden:NO];
+}
 %end    /// %hook SpringBoard
-
-
-
-//@interface SBUIAnimationController : NSObject
-//- (id)animationSettings;
-//@end
-//
-//%hook SBUIAnimationController
-//- (void)_prepareAnimation {
-//    %orig;
-//    
-//    HBLogDebug(@"animation test (prepare)");
-//    [self performSelector:@selector(crashThisBitch)];
-//}
-//
-//- (void)__startAnimation {
-//    %orig;
-//    
-//    NSLog(@"[NotchSimulator] %@", self);
-//}
-//- (void)_startAnimation {
-//    %orig;
-//    
-//    HBLogDebug(@"animation test (start)");
-//    [self performSelector:@selector(crashThisBitch)];
-//}
-//
-//-(void)setAnimationSettings:(id)arg1 {
-//    HBLogDebug(@"animation test (set anim settings)");
-//    [self performSelector:@selector(crashThisBitch)];
-//}
-//%end
 
 %end    // %group SpringBoard
 
@@ -68,34 +64,29 @@
  */
 %hook SpringBoard
 - (long long) homeScreenRotationStyle {
-    if (disableHomeScreenRotation) return 0;
+    if (disableHomeScreenRotation && !isIpad) return 0;
     return %orig;
 }
 %end    /// %hook SpringBoard
 
 %hook SBHomeScreenViewController
 - (NSInteger)supportedInterfaceOrientations {
-    if (disableHomeScreenRotation) return UIInterfaceOrientationMaskPortrait;
+    if (disableHomeScreenRotation && !isIpad) return UIInterfaceOrientationMaskPortrait;
     return %orig;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)arg1 {
-    if (disableHomeScreenRotation) return YES;
+    if (disableHomeScreenRotation && isIpad) return YES;
     return %orig;
 }
 %end	/// %hook SBHomeScreenViewController
 
+%hook SBDeckSwitcherPersonality
 /**
  * Round those corners!
  */
-%hook SBDeckSwitcherPersonality
-- (double)_cardCornerRadiusInApplication {
-    if (roundedCornersVisible) return 39;
-    return %orig;
-}
-
 - (double)_cardCornerRadiusInAppSwitcher {
-    if (roundedCornersVisible) return 27.3;
+	if (roundedCornersVisible) return isIpad ? 13.5 : 27.3;
     return %orig;
 }
 %end	/// %hook SBDeckSwitcherPersonality
@@ -105,6 +96,8 @@
  */
 %hook SBIconListView
 + (NSUInteger)maxVisibleIconRowsInterfaceOrientation:(UIInterfaceOrientation)arg1 {
+	if (isIpad) return %orig;
+	
     NSUInteger r = %orig;
     if (UIInterfaceOrientationIsLandscape(arg1)) {
         return r;
@@ -119,18 +112,19 @@
 /**
  * Set the App Switcher kill style
  * 1 = Hold, 2 = Swipe
+ * Limited to iOS 11
  */
 %hook SBAppSwitcherSettings
 - (NSInteger)effectiveKillAffordanceStyle {
-    return switcherKillStyle;
+	return isPeace ? %orig : switcherKillStyle;
 }
 
 - (NSInteger)killAffordanceStyle {
-    return switcherKillStyle;
+	return isPeace ? %orig : switcherKillStyle;
 }
 
 - (void)setKillAffordanceStyle:(NSInteger)style {
-    %orig(switcherKillStyle);
+	%orig(isPeace ? style : switcherKillStyle);
 }
 %end	/// %hook SBAppSwitcherSettings
 
@@ -139,7 +133,7 @@
  */
 %hook SBDockView
 - (BOOL)isDockInset {
-    if (!modernDock) return NO;
+    if (!modernDock && !isIpad) return NO;
     return %orig;
 }
 %end	/// %hook SBDockView
@@ -153,177 +147,44 @@
 }
 %end	/// %hook SBDashBoardTeachableMomentsContainerViewController
 
+%hook SBDashBoardQuickActionsView
+
+- (void)_layoutQuickActionButtons {
+	%orig;
+	
+	if (!isPeace) return;
+	
+	for (UIView* subview in self.subviews) {
+		if (subview.frame.size.width < 50) {
+			if (subview.frame.origin.x < UIScreen.mainScreen.bounds.size.width / 2) {
+				CGRect _frame = subview.frame;
+				_frame = CGRectMake(46, _frame.origin.y - 90, 50, 50);
+				subview.frame = _frame;
+				[subview sb_removeAllSubviews];
+				
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-value"
+				[subview init];
+#pragma clang diagnostic pop
+			} else {
+				CGFloat _screenWidth = UIScreen.mainScreen.bounds.size.width;
+				CGRect _frame = subview.frame;
+				_frame = CGRectMake(_screenWidth - 96, _frame.origin.y - 90, 50, 50);
+				subview.frame = _frame;
+				[subview sb_removeAllSubviews];
+				
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-value"
+				[subview init];
+#pragma clang diagnostic pop
+			}
+		}
+	}
+}
+
+%end	/// %hook SBDashBoardQuickActionsView
+
 %end    // %group D22AP
-
-
-
-%group ProudLock
-
-/**
- * Create a new ProudLock view controller and set the presenter
- */
-%hook SBDashBoardViewController
-- (void)loadView {
-    proudLockViewController = MSHookIvar<SBDashBoardProudLockViewController*>(self, "_proudLockViewController");
-    
-    if (!proudLockViewController) {
-        proudLockViewController = [%c(SBDashBoardProudLockViewController) new];
-        MSHookIvar<SBDashBoardProudLockViewController*>(self,"_proudLockViewController") = proudLockViewController;
-    }
-    
-    [proudLockViewController setPresenter:self];
-    
-    %orig;
-}
-%end    /// %hook SBDashBoardViewController
-
-/**
- * Make the dashboard view recognize our ProudLock view
- */
-%hook SBDashBoardView
-- (void)setProudLockIconView:(id)arg1 {
-    %orig(proudLockViewController.view);
-}
-
-- (id)proudLockIconView {
-    return proudLockViewController.view;
-}
-%end    /// %hook SBDashBoardView
-
-/**
- * Add the ProudLock view to the hierachy because iOS won't do it
- */
-%hook SBDashBoardView
-- (void)layoutSubviews {
-    %orig;
-    
-    proudLockIconView = MSHookIvar<SBUIProudLockIconView*>(self, "_proudLockIconView");
-    if (!proudLockIconView) {
-        proudLockIconView = (SBUIProudLockIconView*)proudLockViewController.view;
-        MSHookIvar<SBUIProudLockIconView*>(self, "_proudLockIconView") = proudLockIconView;
-        
-        [[[self subviews] lastObject] addSubview:proudLockIconView];
-    }
-    
-    BOOL iconVisible = MSHookIvar<BOOL>(proudLockViewController, "_iconVisible");
-    if (!iconVisible) {
-        [proudLockViewController _setIconVisible:YES animated:NO];
-        [proudLockViewController _setIconState:1 animated:NO];
-    }
-}
-%end    /// %hook SBDashBoardView
-
-/**
- * Load a fixed CAML bundle for use on @2x devices
- */
-%hook SBUICAPackageView
-- (id)initWithPackageName:(id)arg1 inBundle:(id)arg2 {
-    NSBundle* themeBundle = [NSBundle bundleWithPath:@"/Library/Application Support/NotchSimulator/biglock_fixed.bundle"];
-    return %orig(@"biglock_fixed", themeBundle);
-}
-%end    /// %hook SBUICAPackageView
-
-/**
- * Move down the lockscreen date view to make space for our ProudLock view
- */
-%hook SBFLockScreenDateView
-- (void)layoutSubviews {
-    %orig;
-    
-    UIView* timeView = MSHookIvar<UIView*>(self, "_timeLabel");
-    CGRect timeViewRect = timeView.frame;
-    timeViewRect.origin.y = 35;
-    [timeView setFrame:timeViewRect];
-    
-    UIView* dateSubtitleView = MSHookIvar<UIView*>(self, "_dateSubtitleView");
-    CGRect dateSubtitleRect = dateSubtitleView.frame;
-    dateSubtitleRect.origin.y = timeViewRect.size.height + (35 - 7);
-    [dateSubtitleView setFrame:dateSubtitleRect];
-    
-    UIView* customSubtitleView = MSHookIvar<UIView*>(self, "_customSubtitleView");
-    CGRect customSubtitleRect = customSubtitleView.frame;
-    customSubtitleRect.origin.y = timeViewRect.size.height + (35 - 7);
-    [customSubtitleView setFrame:customSubtitleRect];
-}
-%end	/// %hook SBFLockScreenDateView
-
-/**
- * Move down the widget view controller only if the device is locked
- */
-%hook WGWidgetGroupViewController
-- (void)viewDidLayoutSubviews {
-    CGRect origFrame = self.view.frame;
-    
-    if (![[%c(SBLockScreenManager) sharedInstance] isLockScreenActive]) {
-        origFrame.origin.y = 0;
-    } else {
-        origFrame.origin.y = 35;
-    }
-    [self.view setFrame:origFrame];
-    
-    %orig;
-}
-%end	/// %hook WGWidgetGroupViewController
-
-/**
- * Move down notification containers
- */
-%hook SBDashBoardAdjunctListView
-- (void)setFrame:(CGRect)arg1 {
-    arg1.origin.y += 35;
-    %orig(arg1);
-}
-%end	/// %hook NCNotificationListCollectionView
-
-%hook NCNotificationListCollectionView
-- (void)setFrame:(CGRect)arg1 {
-    arg1.origin.y = 35;
-    %orig(arg1);
-}
-
-/**
- * Move our ProudLock view with the notification container
- */
-- (void)scrollViewDidScroll:(id)arg1 {
-    UIEdgeInsets adjustedInsets = [self adjustedContentInset];
-    CGPoint contentOffset = [self contentOffset];
-    [proudLockViewController.view setTransform:CGAffineTransformMakeTranslation(0, (-adjustedInsets.top + -contentOffset.y))];
-    
-    %orig;
-}
-%end	/// %hook NCNotificationListCollectionView
-
-/**
- * Some hacky stuff to make our ProudLock view disappear when we've hit too many Touch ID failures
- * This still doesn't work correctly, and I might never find a proper solution
- */
-static SBDashBoardPasscodeViewController* passcodeVC;
-%hook SBDashBoardPasscodeViewController
-- (void)loadView {
-    passcodeVC = self;
-    %orig;
-}
-
-- (BOOL)useBiometricPresentation {
-    return YES;
-}
-%end    /// SBDashBoardPasscodeViewController
-
-%hook SBUIInteractionForwardingView
-- (void)setAlpha:(CGFloat)arg1 {
-    if (passcodeVC) {
-        if (arg1 == 0) {
-            [passcodeVC setShowProudLock:NO];
-        } else {
-            [passcodeVC setShowProudLock:YES];
-        }
-    }
-    
-    %orig;
-}
-%end    /// SBUIInteractionForwardingView
-
-%end    // %group ProudLock
 
 
 
@@ -334,17 +195,43 @@ static SBDashBoardPasscodeViewController* passcodeVC;
  */
 %hook UIScreen
 - (double)_displayCornerRadius {
-    if (roundedCornersVisible) return 39;
+	if (roundedCornersVisible) return isIpad ? 18 : 39;
     return %orig;
 }
 %end    /// %hook UIScreen
 
 %hook UITraitCollection
 - (double)_displayCornerRadius {
-    if (roundedCornersVisible) return 39;
+    if (roundedCornersVisible) return isIpad ? 18 : 39;
     return %orig;
 }
 %end    /// %hook UITraitCollection
+
+%hook UIStatusBar_Base
++ (Class)_implementationClass {
+	return NSClassFromString(@"UIStatusBar_Modern");
+}
+
++ (void)_setImplementationClass:(Class)arg1 {
+	%orig(NSClassFromString(@"UIStatusBar_Modern"));
+}
+%end	/// %hook UIStatusBar_Base
+
+%hook _UIStatusBarVisualProvider_iOS
++ (Class)class {
+	if (!isPeace) return NSClassFromString(@"_UIStatusBarVisualProvider_Split");
+	
+	return isIpad ?
+		NSClassFromString(@"_UIStatusBarVisualProvider_RoundedPad_ForcedCellular") :
+		NSClassFromString(@"_UIStatusBarVisualProvider_Split58");
+}
+%end	/// %hook _UIStatusBarVisualProvider_iOS
+
+%hook UIStatusBarWindow
++ (void)setStatusBar:(Class)arg1 {
+	%orig(NSClassFromString(@"UIStatusBar_Modern"));
+}
+%end	/// %hook UIStatusBarWindow
 
 %end    // %group UIKit
 
@@ -388,35 +275,66 @@ extern "C" CFPropertyListRef MGCopyAnswer(CFStringRef prop);
 static CFPropertyListRef (*orig_MGCopyAnswer_internal)(CFStringRef prop, uint32_t* outTypeCode);
 
 CFPropertyListRef new_MGCopyAnswer_internal(CFStringRef key, uint32_t* outTypeCode) {
-    CFPropertyListRef r = orig_MGCopyAnswer_internal(key, outTypeCode);
-    #define k(string) CFEqual(key, CFSTR(string))
-     NSString* bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-    if (k("oPeik/9e8lQWMszEjbPzng") || k("ArtworkTraits")) {
-        CFMutableDictionaryRef copy = CFDictionaryCreateMutableCopy(NULL, 0, (CFDictionaryRef)r);
-        CFRelease(r);
-        
-        CFNumberRef num;
-        uint32_t deviceSubType = 0x984;
-        
-        num = CFNumberCreate(NULL, kCFNumberIntType, &deviceSubType);
-        CFDictionarySetValue(copy, CFSTR("ArtworkDeviceSubType"), num);
-
-        return copy;
-    } else if ((k("8olRm6C1xqr7AJGpLRnpSw") || k("PearlIDCapability")) && [bundleIdentifier isEqualToString:@"com.apple.springboard"]) {
-        return (__bridge CFPropertyListRef)@YES;
-    } else if (k("y5dppxx/LzxoNuW+iIKR3g") || k("DeviceCornerRadius")) {
-        return (__bridge CFPropertyListRef)@39;
-    } else if (k("JwLB44/jEB8aFDpXQ16Tuw") || k("HomeButtonType")) {
-        return (__bridge CFPropertyListRef)@2;
-    } else if (k("/YYygAofPDbhrwToVsXdeA") || k("HwModelStr")) {
-        return (__bridge CFPropertyListRef)@"D22AP";
-    } else if (k("Z/dqyWS6OZTRy10UcmUAhw") || k("marketing-name")) {
-        return (__bridge CFPropertyListRef)@"iPhone X";
-    } else if (k("h9jDsbgj7xIVeIQ8S3/X3Q") || k("ProductType")) {
-        return (__bridge CFPropertyListRef)@"iPhone10,3";
-    }
-
-    return r;
+#define k(string) CFEqual(key, CFSTR(string))
+	
+	CFPropertyListRef r = orig_MGCopyAnswer_internal(key, outTypeCode);
+	NSString* bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+	
+	if (isIpad) {
+		if (k("oPeik/9e8lQWMszEjbPzng") || k("ArtworkTraits")) {
+			CFMutableDictionaryRef copy = CFDictionaryCreateMutableCopy(NULL, 0, (CFDictionaryRef)r);
+			CFRelease(r);
+			
+			CFNumberRef num;
+			uint32_t deviceSubType = 0xAAC;
+			
+			num = CFNumberCreate(NULL, kCFNumberIntType, &deviceSubType);
+			CFDictionarySetValue(copy, CFSTR("ArtworkDeviceSubType"), num);
+			
+			return copy;
+		} else if (k("y5dppxx/LzxoNuW+iIKR3g") || k("DeviceCornerRadius")) {
+			return (__bridge CFPropertyListRef)@18;
+		} else if (k("/YYygAofPDbhrwToVsXdeA") || k("HwModelStr")) {
+			return (__bridge CFPropertyListRef)@"J320AP";
+		} else if (k("Z/dqyWS6OZTRy10UcmUAhw") || k("marketing-name")) {
+			return (__bridge CFPropertyListRef)@"J320";
+		} else if (k("h9jDsbgj7xIVeIQ8S3/X3Q") || k("ProductType")) {
+			return (__bridge CFPropertyListRef)@"iPad8,5";
+		}
+	} else {
+		if (k("oPeik/9e8lQWMszEjbPzng") || k("ArtworkTraits")) {
+			CFMutableDictionaryRef copy = CFDictionaryCreateMutableCopy(NULL, 0, (CFDictionaryRef)r);
+			CFRelease(r);
+			
+			CFNumberRef num;
+			uint32_t deviceSubType = 0x984;
+			
+			num = CFNumberCreate(NULL, kCFNumberIntType, &deviceSubType);
+			CFDictionarySetValue(copy, CFSTR("ArtworkDeviceSubType"), num);
+			
+			return copy;
+		} else if (k("y5dppxx/LzxoNuW+iIKR3g") || k("DeviceCornerRadius")) {
+			return (__bridge CFPropertyListRef)@39;
+		} else if (k("JwLB44/jEB8aFDpXQ16Tuw") || k("HomeButtonType")) {
+			return (__bridge CFPropertyListRef)@2;
+		} else if (k("/YYygAofPDbhrwToVsXdeA") || k("HwModelStr")) {
+			return (__bridge CFPropertyListRef)@"D321AP";
+		} else if (k("Z/dqyWS6OZTRy10UcmUAhw") || k("marketing-name")) {
+			return (__bridge CFPropertyListRef)@"iPhone XS";
+		} else if (k("h9jDsbgj7xIVeIQ8S3/X3Q") || k("ProductType")) {
+			return (__bridge CFPropertyListRef)@"iPhone11,2";
+		} else if (k("iBLsDETxB4ATmspGucaJyg") || k("IsLargeFormatPhone")) {
+			return (__bridge CFPropertyListRef)@YES;
+		}
+	}
+	
+	if ((k("8olRm6C1xqr7AJGpLRnpSw") || k("PearlIDCapability")) && [bundleIdentifier isEqualToString:@"com.apple.springboard"]) {
+		return (__bridge CFPropertyListRef)@YES;
+	} else if (k("JwLB44/jEB8aFDpXQ16Tuw") || k("HomeButtonType")) {
+		return (__bridge CFPropertyListRef)@2;
+	}
+	
+	return r;
 }
 
 %ctor {
@@ -438,21 +356,18 @@ CFPropertyListRef new_MGCopyAnswer_internal(CFStringRef key, uint32_t* outTypeCo
         roundedCornersVisible = (BOOL)[[notchPreferences objectForKey:@"showRoundedCorners"] ?: @YES boolValue];
         hideInScreenshots = (BOOL)[[notchPreferences objectForKey:@"hideVisualsInScreenshots"] ?: @YES boolValue];
         
-        latchEnabled = (BOOL)[[notchPreferences objectForKey:@"latchEnabled"] ?: @YES boolValue];
-        
         d2xEnabled = (BOOL)[[notchPreferences objectForKey:@"d2xEnabled"] ?: @YES boolValue];
         modernDock = (BOOL)[[notchPreferences objectForKey:@"d2xDock"] ?: @YES boolValue];
         reduceIconRows = (BOOL)[[notchPreferences objectForKey:@"d2xReduceIconRows"] ?: @NO boolValue];
-        switcherKillStyle = (NSInteger)[[notchPreferences objectForKey:@"d2xSwitcherStyle"] ?: @1 integerValue];
+		switcherKillStyle = (NSInteger)[[notchPreferences objectForKey:@"d2xSwitcherStyle"] ?: @1 integerValue];
         disableHomeScreenRotation = (BOOL)[[notchPreferences objectForKey:@"d2xDisableHomeRotation"] ?: @YES boolValue];
         
         if (enabled) {
+			isIpad = (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad);
+			isPeace = kCFCoreFoundationVersionNumber >= 1556.0;
+			
             if ([bundleIdentifier isEqualToString:@"com.apple.springboard"]) {
                 %init(SpringBoard);
-                
-                if (latchEnabled) {
-                    %init(ProudLock);
-                }
                 
                 if (d2xEnabled) {
                     %init(D22AP);
@@ -467,13 +382,13 @@ CFPropertyListRef new_MGCopyAnswer_internal(CFStringRef key, uint32_t* outTypeCo
                 if (memcmp(MGCopyAnswer_ptr, MGCopyAnswer_arm64_impl, 8) == 0) {
                     MSHookFunction((void *)(MGCopyAnswer_ptr + 8), (void*)new_MGCopyAnswer_internal, (void**)&orig_MGCopyAnswer_internal);
                 }
-                
+				
                 %init(UIKit);
-                
-                if ([bundleIdentifier isEqualToString:@"com.apple.camera"]) {
+				
+                if (!isIpad && [bundleIdentifier isEqualToString:@"com.apple.camera"]) {
                     %init(CameraHack);
                 }
-                if ([bundleIdentifier isEqualToString:@"com.apple.mobilesafari"]) {
+                if (!isIpad && [bundleIdentifier isEqualToString:@"com.apple.mobilesafari"]) {
                     %init(SafariHack);
                 }
             }

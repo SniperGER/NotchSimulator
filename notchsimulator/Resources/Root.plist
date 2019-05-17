@@ -72,16 +72,6 @@
 			<key>cell</key>
 			<string>PSLinkListCell</string>
 			<key>detail</key>
-			<string>NTDLatchSettings</string>
-			<key>isController</key>
-			<true/>
-			<key>label</key>
-			<string>SECTION_FACE_ID</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSLinkListCell</string>
-			<key>detail</key>
 			<string>NTDD2xSettings</string>
 			<key>isController</key>
 			<true/>
