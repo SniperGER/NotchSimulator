@@ -167,9 +167,8 @@
 				[subview init];
 #pragma clang diagnostic pop
 			} else {
-				CGFloat _screenWidth = UIScreen.mainScreen.bounds.size.width;
 				CGRect _frame = subview.frame;
-				_frame = CGRectMake(_screenWidth - 96, _frame.origin.y - 90, 50, 50);
+				_frame = CGRectMake(subview.superview.frame.size.width - 96, _frame.origin.y - 90, 50, 50);
 				subview.frame = _frame;
 				[subview sb_removeAllSubviews];
 				
