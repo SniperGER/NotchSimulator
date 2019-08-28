@@ -156,6 +156,8 @@
 	
 	if (!isPeace) return;
 	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-value"
 	for (UIView* subview in self.subviews) {
 		if (subview.frame.size.width < 50) {
 			if (subview.frame.origin.x < UIScreen.mainScreen.bounds.size.width / 2) {
@@ -164,18 +166,13 @@
 				subview.frame = _frame;
 				[subview sb_removeAllSubviews];
 				
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-value"
 				[subview init];
-#pragma clang diagnostic pop
 			} else {
 				CGRect _frame = subview.frame;
 				_frame = CGRectMake(subview.superview.frame.size.width - 96, _frame.origin.y - 90, 50, 50);
 				subview.frame = _frame;
 				[subview sb_removeAllSubviews];
 				
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-value"
 				[subview init];
 #pragma clang diagnostic pop
 			}
@@ -427,26 +424,4 @@ static addr_t follow_branch64(const uint8_t *buf, addr_t branch) {
             %init;
         }
     }
-    
-//    if (d2xEnabled) {
-//        uint8_t MGCopyAnswer_arm64_impl[8] = {0x01, 0x00, 0x80, 0xd2, 0x01, 0x00, 0x00, 0x14};
-//        const uint8_t* MGCopyAnswer_ptr = (const uint8_t*) MGCopyAnswer;
-//        if (memcmp(MGCopyAnswer_ptr, MGCopyAnswer_arm64_impl, 8) == 0) {
-//            MSHookFunction((void *)(MGCopyAnswer_ptr + 8), (void*)new_MGCopyAnswer_internal, (void**)&orig_MGCopyAnswer_internal);
-//        }
-//        
-//        if ([bundleIdentifier isEqualToString:@"com.apple.springboard"]) {
-//            %init(SpringBoard);
-//        }
-//        if ([bundleIdentifier isEqualToString:@"com.apple.camera"]) {
-//            %init(CameraHack);
-//        }
-//        if ([bundleIdentifier isEqualToString:@"com.apple.mobilesafari"]) {
-//            %init(SafariHack);
-//        }
-//        
-//        %init(UIKit);
-//    }
-//    
-//    %init;
 }
