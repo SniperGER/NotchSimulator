@@ -337,6 +337,34 @@ CFPropertyListRef new_MGCopyAnswer_internal(CFStringRef key, uint32_t* outTypeCo
 	return r;
 }
 
+
+
+typedef unsigned long long addr_t;
+
+static addr_t step64(const uint8_t *buf, addr_t start, size_t length, uint32_t what, uint32_t mask) {
+	addr_t end = start + length;
+	while (start < end) {
+		uint32_t x = *(uint32_t *)(buf + start);
+		if ((x & mask) == what) {
+			return start;
+		}
+		start += 4;
+	}
+	return 0;
+}
+
+static addr_t find_branch64(const uint8_t *buf, addr_t start, size_t length) {
+	return step64(buf, start, length, 0x14000000, 0xFC000000);
+}
+
+static addr_t follow_branch64(const uint8_t *buf, addr_t branch) {
+	long long w;
+	w = *(uint32_t *)(buf + branch) & 0x3FFFFFF;
+	w <<= 64 - 26;
+	w >>= 64 - 26 - 2;
+	return branch + w;
+}
+
 %ctor {
     // File integrity check
     if (access(DPKG_PATH, F_OK) == -1) {
@@ -377,10 +405,13 @@ CFPropertyListRef new_MGCopyAnswer_internal(CFStringRef key, uint32_t* outTypeCo
             /// TODO: App Preferences
             
             if (d2xEnabled) {
-                uint8_t MGCopyAnswer_arm64_impl[8] = {0x01, 0x00, 0x80, 0xd2, 0x01, 0x00, 0x00, 0x14};
-                const uint8_t* MGCopyAnswer_ptr = (const uint8_t*) MGCopyAnswer;
-                if (memcmp(MGCopyAnswer_ptr, MGCopyAnswer_arm64_impl, 8) == 0) {
-                    MSHookFunction((void *)(MGCopyAnswer_ptr + 8), (void*)new_MGCopyAnswer_internal, (void**)&orig_MGCopyAnswer_internal);
+                MSImageRef libGestalt = MSGetImageByName("/usr/lib/libMobileGestalt.dylib");
+				if (libGestalt) {
+					void *MGCopyAnswerFn = MSFindSymbol(libGestalt, "_MGCopyAnswer");
+					const uint8_t *MGCopyAnswer_ptr = (const uint8_t *)MGCopyAnswer;
+					addr_t branch = find_branch64(MGCopyAnswer_ptr, 0, 8);
+					addr_t branch_offset = follow_branch64(MGCopyAnswer_ptr, branch);
+					MSHookFunction(((void *)((const uint8_t *)MGCopyAnswerFn + branch_offset)), (void *)new_MGCopyAnswer_internal, (void **)&orig_MGCopyAnswer_internal);
                 }
 				
                 %init(UIKit);
