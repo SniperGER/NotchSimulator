@@ -32,6 +32,8 @@
     
     [self.notchWindow setNotchVisible:notchVisible roundedCornersVisible:roundedCornersVisible];
     [self.notchWindow makeKeyAndVisible];
+	
+	[[%c(SBReachabilityManager) sharedInstance] ignoreWindowForReachability:self.notchWindow];
 }
 
 - (void)takeScreenshotAndEdit:(BOOL)arg1 {
