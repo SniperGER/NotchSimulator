@@ -320,7 +320,10 @@ CFPropertyListRef new_MGCopyAnswer_internal(CFStringRef key, uint32_t* outTypeCo
 			return (__bridge CFPropertyListRef)@"iPhone XS";
 		} else if (k("h9jDsbgj7xIVeIQ8S3/X3Q") || k("ProductType")) {
 			return (__bridge CFPropertyListRef)@"iPhone11,2";
-		} else if (k("iBLsDETxB4ATmspGucaJyg") || k("IsLargeFormatPhone")) {
+		} else if (k("iBLsDETxB4ATmspGucaJyg") || k("IsLargeFormatPhone") ||
+					k("0/VAyl58TL5U/mAQEJNRQw") || k("DeviceHasAggregateCamera") ||
+					k("hewg+QX1h57eGJGphdCong") || k("DeviceSupportsPortraitLightEffectFilters") ||
+					k("oLjiDs+BWEdMVbjE0x6cnw") || k("DeviceSupportsStudioLightPortraitPreview")) {
 			return (__bridge CFPropertyListRef)@YES;
 		}
 	}
