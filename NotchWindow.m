@@ -11,7 +11,7 @@
 
 - (id)initWithFrame:(CGRect)frame {
 	if (self = [super initWithFrame:frame]) {
-		[self setUserInteractionEnabled:NO];
+		[self setUserInteractionEnabled:YES];
 		[self setWindowLevel:UIWindowLevelAlert-100];
 		[self _setSecure:YES];
 		
@@ -26,7 +26,7 @@
 			[notch setBackgroundColor:[UIColor blackColor]];
 			[self addSubview:notch];
 			
-			UIBezierPath* notchPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, screenWidth, 30)];
+			notchPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, screenWidth, 30)];
 			UIBezierPath* notchCutoutPath = [UIBezierPath bezierPath];
 			[notchCutoutPath moveToPoint:CGPointMake(0, 0)];
 			[notchCutoutPath addLineToPoint:CGPointMake(notchOffset - 6, 0)];
@@ -83,7 +83,7 @@
 			
 			notchDetail = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"notch_detail" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/NotchSimulator"] compatibleWithTraitCollection:nil]];
 			[notchDetail setFrame:CGRectSetX(notchDetail.frame, notchOffset + 20)];
-//			[notch addSubview:notchDetail];
+			[notch addSubview:notchDetail];
 		}
 		
 		
@@ -100,12 +100,12 @@
 			cornerRadius = 18;
 		}
 		
-		UIBezierPath* cutoutPath = [UIBezierPath bezierPathWithRect:frame];
-		[cutoutPath appendPath:[UIBezierPath bezierPathWithRoundedRect:frame cornerRadius:cornerRadius]];
-		[cutoutPath setUsesEvenOddFillRule:YES];
+		roundedCornersPath = [UIBezierPath bezierPathWithRect:frame];
+		[roundedCornersPath appendPath:[UIBezierPath bezierPathWithRoundedRect:frame cornerRadius:cornerRadius]];
+		[roundedCornersPath setUsesEvenOddFillRule:YES];
 		
 		CAShapeLayer* maskLayer = [CAShapeLayer layer];
-		[maskLayer setPath:cutoutPath.CGPath];
+		[maskLayer setPath:roundedCornersPath.CGPath];
 		[maskLayer setFillColor:[UIColor blackColor].CGColor];
 		[maskLayer setFillRule:kCAFillRuleEvenOdd];
 		[roundedCorners.layer setMask:maskLayer];
@@ -136,8 +136,16 @@
 	}
 }
 
-- (BOOL)_ignoresHitTest {
-	return YES;
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+	if (notchIsVisible && CGPathContainsPoint(notchPath.CGPath, nil, point, true)) {
+		return self;
+	}
+	
+	if (roundedCornersAreVisible && CGPathContainsPoint(roundedCornersPath.CGPath, nil, point, true)) {
+		return self;
+	}
+	
+	return nil;
 }
 
 @end

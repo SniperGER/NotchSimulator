@@ -13,6 +13,9 @@
 @end
 
 @interface NotchWindow : UIWindow {
+	UIBezierPath* notchPath;
+	UIBezierPath* roundedCornersPath;
+	
 	BOOL notchIsVisible;
 	BOOL roundedCornersAreVisible;
 	BOOL notchDetailIsVisible;
