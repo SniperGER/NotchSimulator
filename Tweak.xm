@@ -244,12 +244,8 @@
  * Move down the camera toolbar
  */
 %hook CAMViewfinderView
-- (void)layoutSubviews {
-    %orig;
-    
-    CGRect topBarFrame = [[self topBar] frame];
-    topBarFrame.origin.y = 40;
-    [[self topBar] setFrame:topBarFrame];
+- (NSInteger)layoutStyle {
+	return 4;
 }
 %end    /// %hook CAMViewfinderView
 
