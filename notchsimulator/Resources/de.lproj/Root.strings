@@ -14,6 +14,7 @@
 	"ELEMENTS_NOTCH" = "Notch";
 	"ELEMENTS_ROUNDED_CORNERS" = "Abgerundete Ecken";
 	"ELEMENTS_NOTCH_DETAILS" = "Notch-Details";
+	"ELEMENTS_FACEID_PADLOCK" = "Face ID-Schloss";
 	"ELEMENTS_HIDE_IN_SCREENSHOTS" = "In Screenshots verstecken";
 	
 	"SECTION_X_MODE" = "X🅂 Mode";
