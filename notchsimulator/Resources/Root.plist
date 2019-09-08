@@ -39,6 +39,22 @@
 			<string>showNotch</string>
 			<key>label</key>
 			<string>ELEMENTS_NOTCH</string>
+			<key>noIpad</key>
+			<true />
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>ml.festival.notchsimulator</string>
+			<key>key</key>
+			<string>showNotchDetails</string>
+			<key>label</key>
+			<string>ELEMENTS_NOTCH_DETAILS</string>
+			<key>noIpad</key>
+			<true />
 		</dict>
 		<dict>
 			<key>cell</key>

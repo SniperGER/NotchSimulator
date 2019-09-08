@@ -7,6 +7,14 @@
 		_specifiers = [self loadSpecifiersFromPlistName:@"AppSettings" target:self];
 	}
 	
+	for (PSSpecifier* specifier in _specifiers) {
+		if (specifier.properties[@"noIpad"] && [specifier.properties[@"noIpad"] boolValue]) {
+			NSMutableDictionary* properties = [specifier.properties mutableCopy];
+			[properties setValue:@(UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPad) forKey:@"enabled"];
+			[specifier setProperties:properties];
+		}
+	}
+	
 	return _specifiers;
 }
 

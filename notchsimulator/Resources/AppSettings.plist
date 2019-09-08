@@ -39,6 +39,8 @@
 			<string>showNotch</string>
 			<key>label</key>
 			<string>NOTCH_SIMULATOR_NOTCH</string>
+			<key>noIpad</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>cell</key>

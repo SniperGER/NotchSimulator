@@ -17,6 +17,15 @@ extern "C" {
 - (NSArray *)specifiers {
 	if (!_specifiers) {
 		NSMutableArray* specifiers = [[self loadSpecifiersFromPlistName:@"Root" target:self] mutableCopy];
+		
+		for (PSSpecifier* specifier in specifiers) {
+			if (specifier.properties[@"noIpad"] && [specifier.properties[@"noIpad"] boolValue]) {
+				NSMutableDictionary* properties = [specifier.properties mutableCopy];
+				[properties setValue:@(UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPad) forKey:@"enabled"];
+				[specifier setProperties:properties];
+			}
+		}
+		
 		[specifiers addObjectsFromArray:[self installedApplications]];
 		_specifiers = specifiers;
 	}
