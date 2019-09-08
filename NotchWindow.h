@@ -25,6 +25,8 @@
 }
 
 - (void)setNotchVisible:(BOOL)notchVisible roundedCornersVisible:(BOOL)roundedCornersVisible;
+- (void)setNotchVisible:(BOOL)notchVisible animated:(BOOL)animated;
+- (void)setRoundedCornersVisible:(BOOL)roundedCornersVisibleVisible animated:(BOOL)animated;
 - (void)setNotchDetailVisible:(BOOL)notchDetailVisible;
 
 @end

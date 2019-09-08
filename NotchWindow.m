@@ -16,6 +16,7 @@
 		[self _setSecure:YES];
 		
 		CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+		CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
 		CGFloat notchWidth = MIN(screenWidth-166, 209);
 		CGFloat notchOffset = MAX((screenWidth - notchWidth) / 2, 46);
 		
@@ -26,7 +27,7 @@
 			[notch setBackgroundColor:[UIColor blackColor]];
 			[self addSubview:notch];
 			
-			notchPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, screenWidth, 30)];
+			notchPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, screenWidth, screenHeight + 40)];
 			UIBezierPath* notchCutoutPath = [UIBezierPath bezierPath];
 			[notchCutoutPath moveToPoint:CGPointMake(0, 0)];
 			[notchCutoutPath addLineToPoint:CGPointMake(notchOffset - 6, 0)];
@@ -46,8 +47,8 @@
 						 controlPoint1:CGPointMake(notchOffset + notchWidth, 6 - 3.31)
 						 controlPoint2:CGPointMake((notchOffset + notchWidth + 6) - 3.31, 0)];
 			[notchCutoutPath addLineToPoint:CGPointMake(screenWidth, 0)];
-			[notchCutoutPath addLineToPoint:CGPointMake(screenWidth, 30)];
-			[notchCutoutPath addLineToPoint:CGPointMake(0, 30)];
+			[notchCutoutPath addLineToPoint:CGPointMake(screenWidth, screenHeight + 40)];
+			[notchCutoutPath addLineToPoint:CGPointMake(0, screenHeight + 40)];
 			[notchCutoutPath closePath];
 			
 			[notchPath appendPath:notchCutoutPath];
@@ -79,10 +80,11 @@
 			
 			// Let's try some more detail, shall we?
 #define CGRectSetX(rect, x) CGRectMake(x, rect.origin.y, rect.size.width, rect.size.height)
-			notchDetailIsVisible = YES;
+			notchDetailIsVisible = NO;
 			
 			notchDetail = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"notch_detail" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/NotchSimulator"] compatibleWithTraitCollection:nil]];
 			[notchDetail setFrame:CGRectSetX(notchDetail.frame, notchOffset + 20)];
+			[notchDetail setHidden:!notchDetailIsVisible];
 			[notch addSubview:notchDetail];
 		}
 		
@@ -126,6 +128,21 @@
 		
 		[roundedCorners setHidden:!roundedCornersVisible];
 	}
+}
+
+- (void)setNotchVisible:(BOOL)notchVisible animated:(BOOL)animated {
+	[UIView animateWithDuration:animated ? 0.3 : 0 animations:^{
+		[notch setTransform:CGAffineTransformMakeTranslation(0, notchVisible ? 0 : -40)];
+	}];
+}
+
+- (void)setRoundedCornersVisible:(BOOL)roundedCornersVisibleVisible animated:(BOOL)animated {
+	CGFloat scale = 1.0626;
+	if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) scale = 1.0282;
+		
+	[UIView animateWithDuration:animated ? 0.3 : 0 animations:^{
+		[roundedCorners setTransform:CGAffineTransformMakeScale(roundedCornersVisibleVisible ? 1 : 1.0626, roundedCornersVisibleVisible ? 1 : 1.0626)];
+	}];
 }
 
 - (void)setNotchDetailVisible:(BOOL)notchDetailVisible {
