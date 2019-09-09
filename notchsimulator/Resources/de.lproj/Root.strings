@@ -24,5 +24,9 @@
 	"RESTART_SPRINGBOARD_CONFIRM" = "SpringBoard neu starten";
 	"RESTART_SPRINGBOARD_CANCEL" = "Abbrechen";
 	
+	"BUTTON_WHATS_NEW" = "Neuigkeiten";
+	"BUTTON_REPORT_ISSUE" = "Problem melden";
+	"BUTTON_MAKE_DONATION" = "Spenden";
+	
 	"APP_SETTINGS" = "App-Einstellungen";
 }

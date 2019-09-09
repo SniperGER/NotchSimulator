@@ -1,6 +1,7 @@
 #include "NTDRootListController.h"
 #include "NTDAppSettingsController.h"
 #import "OrderedDictionary.h"
+#include "NTDWhatsNewController.h"
 #include <spawn.h>
 
 #if __cplusplus
@@ -50,8 +51,8 @@ extern "C" {
 	OrderedDictionary* orderedApps = (OrderedDictionary*)[apps copy];
 	orderedApps = [self sortedDictionary:orderedApps];
 	
-	PSSpecifier* groupSpecifier = [PSSpecifier groupSpecifierWithName:[prefBundle localizedStringForKey:@"APP_SETTINGS" value:@"" table:@"Root"]];
-	[specifiers addObject:groupSpecifier];
+	// PSSpecifier* groupSpecifier = [PSSpecifier groupSpecifierWithName:[prefBundle localizedStringForKey:@"APP_SETTINGS" value:@"" table:@"Root"]];
+	// [specifiers addObject:groupSpecifier];
 	
 	for (NSString* bundleIdentifier in orderedApps.allKeys) {
 		NSString* displayName = orderedApps[bundleIdentifier];
@@ -116,6 +117,21 @@ extern "C" {
 	[alertController addAction:cancelAction];
 	[alertController addAction:confirmAction];
 	[self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)showWhatsNew {
+	NTDWhatsNewController* whatsNewController = [NTDWhatsNewController new];
+	UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:whatsNewController];
+	[navigationController setModalPresentationStyle:UIModalPresentationFormSheet];
+	[self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)reportIssue {
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/SniperGER/NotchSimulator"] options:@{} completionHandler:nil];
+}
+
+- (void)makeDonation {
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://paypal.me/SniperGER"] options:@{} completionHandler:nil];
 }
 
 @end

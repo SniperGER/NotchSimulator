@@ -6,9 +6,9 @@ ARCHS = arm64
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = notchsimulator
-notchsimulator_FILES = NTDRootListController.m NTDAppSettingsController.m NTDD2xSettings.m  OrderedDictionary.m
+notchsimulator_FILES = NTDRootListController.m NTDAppSettingsController.m NTDD2xSettings.m OrderedDictionary.m NTDWhatsNewController.m
 notchsimulator_INSTALL_PATH = /Library/PreferenceBundles
-notchsimulator_FRAMEWORKS = UIKit
+notchsimulator_FRAMEWORKS = UIKit WebKit
 notchsimulator_PRIVATE_FRAMEWORKS = Preferences SpringBoardServices
 notchsimulator_CFLAGS = -fobjc-arc
 

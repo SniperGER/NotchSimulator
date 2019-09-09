@@ -1,0 +1,245 @@
+<html>
+	<head>
+		<title>Notch'd – What's New</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		
+		<style>
+			body {
+				background-color: white;
+				max-width: 790px;
+				margin: 0 auto;
+				padding: 30px 0;
+			}
+			.markdown-body {
+				padding-right: 30px;
+			}
+			@media all and (min-width: 700px) {
+				body {
+					padding: 30px;
+				}
+			}
+		</style>
+		
+		<link rel="stylesheet" href="assets/github-markdown.css" />
+		<link rel="stylesheet" href="assets/pilcrow.css" />
+		<link rel="stylesheet" href="assets/hljs-github.min.css" />
+	</head>
+	
+	<body>
+		<article class="markdown-body">
+			<h2>Version 0.7-1</h2>
+			<p><small>September 9, 2019</small></p>
+			
+			<p>This is a small update that just focusses on the Settings</p>
+			<ul>
+				<li>Added "What's New" so you can always check the release notes from within the Settings</li>
+				<li>Added "Report Issue" and "Donate" buttons</li>
+			</ul>
+			
+			
+			
+			
+			<h2>Version 0.7</h2>
+			<p><small>September 8, 2019</small></p>
+			
+			<p>Finally, another update for Notch'd! This time, I've got some pretty sweet stuff for you. Check this out:</p>
+			<ul>
+				<li>Partial rewrite to ensure support for iOS 11*</li>
+				<li>The return of ProudLock included in Notch'd! And it even supports iOS 11*!</li>
+				<li>Fixed the keyboard moving to the right when using it in landscape</li>
+				<li>Fixed setting a video's gravity (fit/fill) – which, for some reason, doesn't work in WKWebView</li>
+				<li>More iPad-specific improvements</li>
+				<li>Fixed Notch window moving when activating Reachability</li>
+				<li>Improved Camera layout (which added new layout issues ¯\_(ツ)_/¯)</li>
+				<li>Added Portrait mode to Camera (but not the functionality, sorry)</li>
+				<li>Finally implemented App-specific settings</li>
+				<li>Added a little bit of optional Notch details. Why? I don't know. It looks kinda intersting.</li>
+			</ul>
+					
+			<p><small>* Since I do not have any device on iOS 11 anymore, I've tested this only inside the Simulator. I may have missed something this way, but it appeared to be working.</small></p>
+			
+			
+			
+			<h2>Version 0.6-RC2</h2>
+			<p><small>April 1, 2019</small></p>
+			
+			<p>It's official! The long awaited iOS 12 update for Notch'd is here! And it's not even an April's Fools joke!</p>
+			<ul>
+				<li>Updated for iOS 12 (I'm unsure about iOS 11 compatibility right now, as I don't have any device on iOS 11 to test this)</li>
+				<li>iPad support! Now you can use Notch'd to turn your iPad into a 2018 iPad Pro!</li>
+				<li>Completely removed ProudLock component (will be replaced by ProudLock itself soon)</li>
+			</ul>
+					
+			<p><small>*Note: This is still considered a Release Candidate as it just includes iOS 12/iPad support, and probably the same bugs as RC1</small></p>
+			
+			
+			
+			<h2>Version 0.6-RC1</h2>
+			<p><small>January 16, 2019</small></p>
+			
+			<p>Update 0.6 is a complete rewrite of Notch'd. Instead of hacking everything together, most of the tweaking is now done by hooking MobileGestalt (MGCopyAnswer in particular).</p>
+			<p>This update should now work with almost any app as this is the most "native" way possible to enable iPhone X features. No more weird frame manipulations on a somewhat per app basis.</p>
+			<p>However, there is something very important with RC1:<br>This release unfortunately still includes a bug that puts your device at a huge security risk. For some reason, your device may stay unlocked even though it should be locked with a passcode or Touch ID. If you experience this bug, disable the Face ID latch as soon as possible! Don't tell me I didn't warn you! IT'S RIGHT HERE! I really hope I can fix this bug in a later release.</p>
+			
+			<p>Anyways, here's the changelog you've been waiting for:</p>
+			<ul>
+				<li>Completely rewritten, should now work with any app</li>
+				<li>Various speed improvements thanks to single MobileGestalt hook</li>
+				<li>Even more iPhone X detail (Face ID icon while unlocking)</li>
+				<li>Fixed widgets being pushed down when on home screen</li>
+				<li>Face ID latch now scrolls with notifications</li>
+			</ul>
+			
+			<p>Also, here's a list of currently known issues (I know it's longer than the changelog, but it's still RC1):</p>
+			<ul>
+				<li>Severe: Face ID latch may keep the device unlocked at all time<br>&emsp;Workaround: Restart SpringBoard or disable "Face ID Latch"</li>
+				<li>Critical: Per-App settings not implemented</li>
+				<li>Major: Currently incompatible with Discord (maybe other apps)</li>
+				<li>Minor: Layout incompatibility with StackXI</li>
+				<li>Minor: Face ID latch is not hidden if unlocking with Touch ID fails within 5 attempts<br>&emsp;Workaround: Turn off screen and try again</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.5-1</h2>
+			<p><small>September 21, 2018</small></p>
+			
+			<p>This version does not yet fix the bugs reported after September 17 (at least  reported in the reviews). There will be another version soon.</p>
+			<ul>
+				<li>Fixed MobilePhone.app layout (at least on 4.7", couldn't test this on an actual 5.5" or larger screen)</li>
+				<li>Added PreferenceLoader dependency</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.5</h2>
+			<p><small>September 12, 2018</small></p>
+			
+			<p>This is a more or less complete rewrite, so we're skipping 0.4 entirely. Also, I was working on a huge Java EE project, which is why this update took so long. However, this project is done, so I now have time to do some iOS Development again.</p>
+			
+			<p>Anyways, here's your changelog for today:</p>
+			<ul>
+				<li>More or less complete rewrite (one single tweak file instead of three, hoping to improve battery life even more)</li>
+				<li>"Hide in Screenshots" returns (formerly "Hide Visuals in Screenshots")</li>
+				<li>"Improved Barmoji Compatibility" setting to prevent Notch'd from messing with the keyboard dock size</li>
+				<li>Localized settings (now in English and German, additional languages following soon)</li>
+				<li>A ton of bug fixes, especially when it comes to per-app settings</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.3-1</h2>
+			<p><small>August 16, 2018</small></p>
+
+			<ul>
+				<li>Added missing settings from LittleX, including per-app settings</li>
+				<li>Restructured settings. If you've had per-app settings, you might want to check them again.</li>
+				<li>Face ID latch can now be moved vertically (Thanks to @jacc on GitHub for the inspiration!)</li>
+				<li>Fixed Notch appearing sometimes even when being globally disabled</li>
+				<li>Fixed X Mode and Face ID latch still working while global kill switch is turned off.</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.3</h2>
+			<p><small>July 26, 2018</small></p>
+			
+			<p>The wait is finally over! It's unbelievably hot outside, and I'm probably sweating more than I can drink, but I still did something here!</p>
+
+			<ul>
+				<li>Completely rewritten Notch'd from scratch</li>
+				<li>Now includes ProudLock to enable the Face ID latch on the lock screen</li>
+				<li>Control Center animation on lock screen? No problemo!</li>
+				<li>Fixed a few crashes here and there</li>
+				<li>Notch'd components can now be disabled per app (instead of only the notch)</li>
+				<li>Look at that fresh icon that probably could have looked better</li>
+				<li>Probably more that I forgot due to that heat around here (34° C, 93° retard units, 307 K)</li>
+			</ul>
+			
+			<p>Also thanks to everyone who has submitted feedback in the last versions! You guys are great!</p>
+			<p>And if you would like to donate, you can do so here: <a href="https://paypal.me/SniperGER">https://paypal.me/SniperGER</a></p>
+			
+			
+			
+			<h2>Version 0.2-6</h2>
+			<p><small>July 26, 2018</small></p>
+			
+			<ul>
+				<li>Fixed MobilePhone.app dial pad layout issues (@eduard77jos, @ulviarslan)</li>
+				<li>Fixed Snapchat not being sble to record videos with X Mode enabled (@UnJa1lbroken)</li>
+				<li>File modification check now only checks after unlocking the device (to prevent unnecessary waiting)</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.2-5</h2>
+			<p><small>July 9, 2018</small></p>
+			
+			<ul>
+				<li>Added Barmoji compatibility again (@saigon_heat, @eduard77jos)</li>
+				<li>Fixed X Mode not respecting Notch'd kill switch</li>
+				<li>X Mode is now respecting "Rounded Corners" setting (@saigon_heat)</li>
+				<li>You can now choose to keep visual elements in screenshots</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.2-4</h2>
+			<p><small>July 9, 2018</small></p>
+			
+			<ul>
+				<li>Fixed notch and rounded corners being visible on screenshots (@master2911)</li>
+				<li>Added iPhone X Mode – a battery efficient rewrite of LittleX (yes, I'm using the LittleX code for this,
+					@auxiliumdev)</li>
+				<li>Includes an experimental file modification check. Don't worry, it won't prevent you from using it.</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.2-3</h2>
+			<p><small>July 8, 2018</small></p>
+			
+			<ul>
+				<li>Fixed rounded corners not being hidden if chosen</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.2-2</h2>
+			<p><small>July 8, 2018</small></p>
+			
+			<ul>
+				<li>Fixed Electra Re-Jailbreak issues by removing "libobjcipc" dependency (wasn't required anyways)</li>
+				<li>Fixed crashes when attempting to shutdown or unlock the SIM card</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.2-1</h2>
+			<p><small>July 8, 2018</small></p>
+			
+			<ul>
+				<li>Fixed rounded corners not being applied to UIKit apps</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.2</h2>
+			<p><small>July 8, 2018</small></p>
+			
+			<ul>
+				<li>Completely rewrote from scratch</li>
+				<li>Now with Settings: Enable or disable the notch or rounded corners, or blacklist the notch in certain apps</li>
+				<li>Fixed incorrect notch corner radius</li>
+			</ul>
+			
+			
+			
+			<h2>Version 0.1</h2>
+			<p><small>July 7, 2018</small></p>
+			
+			<p>Initial release</p>
+		</article>
+	</body>
+</html>
